@@ -1,12 +1,19 @@
 var characters = [
 	["Finn", 150, 6, 5],
- 	["Jake", 100, 5, 4],
- 	["Ice King", 200, 7, 6],
- 	["Princess BP", 250, 8, 7],
+ 	["Jake", 125, 5, 4],
+ 	["Ice King", 175, 7, 6],
+ 	["Princess BP", 200, 8, 7],
  ]; //[Name, HP, Base ATK, Counter ATK]
 
 var playerChose = false;
 var enemyChosen = false;
+
+//Initial Character Health Points
+$(".finn").html(characters[0][1]);
+$(".jake").html(characters[1][1]);
+$(".iceking").html(characters[2][1]);
+$(".bgp").html(characters[3][1]);
+
 $(document).ready(function(){
 	$(".character").on("click", function(){
 		//Player choses a character, can only do so once. 
@@ -17,29 +24,43 @@ $(document).ready(function(){
 			//Runs through all characters and places in enemy section
 			//Then the chosen character is placed in player section
 			for(var i = 0; i < characters.length; i++){	
+				//*ERROR #1: looping is replacing value names, enemy name below always shows up as Princess BP
 				$(".character").attr("value", characters[i][0]).appendTo(".enemy-section");
+				
+				//Adding enemy class to differentiate between chara types
 				$(".character").attr("value", characters[i][0]).addClass("enemy");
 				$(this).appendTo(".player-section");
+
+				//Need to remove enemy class from player character
 				$(this).removeClass("enemy");
 				console.log($(this));
-
 			}
 			playerChose = true; //change boolean value to true so statement can't run again
 			console.log(choice);
 		}
+
+		//Player now chooses an enemy from leftover options
+		//Chosen enemy moved to Defender Section
 		if(enemyChosen === false && $(this).hasClass("enemy")){
 			var yourEnemy = $(this).attr("value");
 			$(".text").html("Your enemy is currently " + yourEnemy);
 			$(this).appendTo(".defender-section");
-			enemyChosen = true;
-			console.log(yourEnemy);
+			enemyChosen = true; //change boolean value to true so statement can't run again
+			console.log(yourEnemy); //*ERROR #1
 		}
+	});
+
+	//Attack Button
+	$("button").on("click", function(){
 		
+
+		$(".finn").html(characters[0][1]);
+		$(".jake").html(characters[1][1]);
+		$(".iceking").html(characters[2][1]);
+		$(".bgp").html(characters[3][1]);
 
 
 	});
-
-
 });
 
 

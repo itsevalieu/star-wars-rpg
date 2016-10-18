@@ -48,5 +48,17 @@ h2{
 /*Text Section*/
 .text{
 	font-weight: bold;
+	background: white;
+	height: 5em;
 }
+
+/*Footer*/
+footer{
+	clear: both;
+	width: 100%;
+	height: 5em;
+	margin-left: 4em;
+}
+
+/*Media Queries*/
 
