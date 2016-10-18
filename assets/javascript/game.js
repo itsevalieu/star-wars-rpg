@@ -7,6 +7,8 @@ var characters = [
 
 var playerChose = false;
 var enemyChosen = false;
+var choice = ""; //global scope
+var yourEnemy = ""; //global scope
 
 //Initial Character Health Points
 $(".finn").html(characters[0][1]);
@@ -16,9 +18,16 @@ $(".bgp").html(characters[3][1]);
 
 $(document).ready(function(){
 	$(".character").on("click", function(){
+		var characters = [
+			["Finn", 150, 6, 5],
+		 	["Jake", 125, 5, 4],
+		 	["Ice King", 175, 7, 6],
+		 	["Princess BP", 200, 8, 7],
+		 ]; //[Name, HP, Base ATK, Counter ATK]
+		
 		//Player choses a character, can only do so once. 
 		if(playerChose === false){
-			var choice = $(this).attr("value");
+			choice = $(this).attr("value");
 			$(".text").html("You chose character: " + choice);
 			
 			//Runs through all characters and places in enemy section
@@ -33,6 +42,7 @@ $(document).ready(function(){
 
 				//Need to remove enemy class from player character
 				$(this).removeClass("enemy");
+				$(this).addClass("player"); //to differentiate player attacked
 				console.log($(this));
 			}
 			playerChose = true; //change boolean value to true so statement can't run again
@@ -42,24 +52,41 @@ $(document).ready(function(){
 		//Player now chooses an enemy from leftover options
 		//Chosen enemy moved to Defender Section
 		if(enemyChosen === false && $(this).hasClass("enemy")){
-			var yourEnemy = $(this).attr("value");
+			yourEnemy = $(this).attr("value");
 			$(".text").html("Your enemy is currently " + yourEnemy);
 			$(this).appendTo(".defender-section");
+			$(this).addClass("currentEnemy"); //to differentiate opponent to attack
 			enemyChosen = true; //change boolean value to true so statement can't run again
 			console.log(yourEnemy); //*ERROR #1
 		}
 	});
 
+//CURRENTLY WORKING ON:
 	//Attack Button
 	$("button").on("click", function(){
+		var attack = true;
 		
+		for(var player = 0; player < characters.length; player++){
+			if(choice === characters[player][0]){
+				var yourBaseAtk = characters[player][2];
+				console.log(yourBaseAtk);
+			}
+		}
+		if(attack){
+			$(".text").html("You attacked " + yourEnemy + " for " + yourBaseAtk +" damage.");
+			for(var cEnemy = 0; cEnemy < characters.length; cEnemy++){
+				if(yourEnemy === characters[cEnemy][0]){
+					var cEnemyCounterAtk = characters[cEnemy][3];
+					console.log(cEnemyCounterAtk);
+				}
+			}
+		}
 
-		$(".finn").html(characters[0][1]);
+/*		$(".finn").html(characters[0][1]);
 		$(".jake").html(characters[1][1]);
 		$(".iceking").html(characters[2][1]);
 		$(".bgp").html(characters[3][1]);
-
-
+*/
 	});
 });
 
