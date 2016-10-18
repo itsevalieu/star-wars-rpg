@@ -2,14 +2,65 @@
 <html>
 <head>
 	<title>Week 4 Game</title>
+	<script src="https://code.jquery.com/jquery-2.2.3.js" integrity="sha256-laXWtGydpwqJ8JA+X9x2miwmaiKhn8tVmOVEigRNtP4=" crossorigin="anonymous"></script>
 	<link rel="stylesheet" type="text/css" href="assets/css/reset.css">
 	<link rel="stylesheet" type="text/css" href= "assets/css/style.css">
+
 </head>
 <body>
-	
+	<h1><img class="header" src="assets/images/adtime-logo.png" alt="Adventure Time RPG Title"></h1>
+
+	<!--Content Section-->
+	<section class="content">
+
+	<div class="row">
+		<h2 class="choices"></h2>
+			<div class="choice-section">
+				<div class="charA character" value="Finn">
+					<p>Finn</p>
+					<img class="finn-img" src="assets/images/finn.png" alt="Finn">
+					<p class="finn hp"> HP</p><!--Do I need the finn class?-->
+				</div>
+				<div class="charB character" value="Jake">
+					<p>Jake</p>
+					<img class="jake-img" src="assets/images/jake.png" alt="Jake">
+					<p class="jake hp"> HP</p>
+				</div>
+				<div class="charC character" value="Ice King">
+					<p>Ice King</p>
+					<img class="iceking-img" src="assets/images/iceking.png" alt="Ice King">
+					<p class="iceking hp"> HP</p>
+				</div>
+				<div class="charD character" value="Princess BG">
+					<p>Princess BG</p>
+					<img class="bgp-img" src="assets/images/bgp.png" alt="Princess Bubblegum">
+					<p class="bgp hp"> HP</p>
+				</div>
+			</div>
+	</div>
+	<div class="row">
+		<h2 class="player">Your Character</h2>
+			<div class="player-section"></div>
+	</div>
+	<div class="row">	
+		<h2 class="enemies">Enemies to Attack</h2>
+			<div class="enemy-section"></div>
+	</div>
+	<div class="row">	
+		<h2 class="fight">Fight Section</h2>
+			<button>Attack!</button>
+	</div>
+	<div class="row">	
+		<h2 class="defender">Defender</h2>
+			<div class="defender-section"></div>
+	</div>
+	<div class="row">	
+		<div class="text"></div>
+	</div>
+	</section>
 
 
-	
+
 	<script type="text/javascript" src="assets/javascript/game.js"></script>
 </body>
 </html>
