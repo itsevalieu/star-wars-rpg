@@ -112,79 +112,102 @@ $(document).ready(function(){
 				function battle(){
 					if(currentEnemyChosen === true){
 						console.log(choice + yourEnemy);
+						var atkDmg = 0;
+						var yourBaseAtk = 0;
+						var yourHP = 0;
+						var currentEnemyHP = 0;
+						var enemyCounterAtk = 0;
+						var connectPlayer = $("button").attr("value", false);
 						$("button").on("click", function(){ 
 							attack(choice, yourEnemy);
 							function attack(choice, yourEnemy){
 								var choice = $(".player").attr("value");
 								var yourEnemy = $(".currentEnemy").attr("value");
+								//finding player hp and atk
+								var connectEnemy = false;
+								if(connectPlayer === false){
 								
-								if(choice === finn.name){
-									var yourBaseAtk = finn.attack;
-									var yourHP = finn.health;
-								}else if(choice === rey.name){
-									var yourBaseAtk = rey.attack;
-									var yourHP = rey.health;
-								}else if(choice === kyloRen.name){
-									var yourBaseAtk = kyloRen.attack;
-									var yourHP = kyloRen.health;
-								}else if(choice === darthVader.name){
-									var yourBaseAtk = darthVader.attack;
-									var yourHP = darthVader.health;
+									if(choice === finn.name){
+										console.log(yourBaseAtk + " " + finn.attack);
+										yourBaseAtk = finn.attack;
+										yourHP = finn.health;
+										console.log(yourBaseAtk + " " + finn.attack);
+										connectPlayer = true;
+									}else if(choice === rey.name){
+										yourBaseAtk = rey.attack;
+										yourHP = rey.health;
+										connectPlayer = true;
+									}else if(choice === kyloRen.name){
+										yourBaseAtk = kyloRen.attack;
+										yourHP = kyloRen.health;
+										connectPlayer = true;
+									}else if(choice === darthVader.name){
+										yourBaseAtk = darthVader.attack;
+										yourHP = darthVader.health;
+										connectPlayer = true;
+									}
 								}
-								var atkDmg = 0;
 								atkDmg = atkDmg + yourBaseAtk;
+								console.log(yourBaseAtk + " " + atkDmg);
 								$(".text").html("You attacked " + yourEnemy + " for " + atkDmg +" damage.");
 								
 								//finding enemy hp and counter	
+								if(connectEnemy === false){
+									if(yourEnemy === finn.name){
+										currentEnemyHP = finn.health;
+										enemyCounterAtk = finn.counter;
+										connectEnemy = true;
+									}else if(yourEnemy === rey.name){
+										currentEnemyHP = rey.health;
+										enemyCounterAtk = rey.counter;
+										connectEnemy = true;
+									}else if(yourEnemy === kyloRen.name){
+										currentEnemyHP = kyloRen.health;
+										enemyCounterAtk = kyloRen.counter;
+										connectEnemy = true;	
+									}else if(yourEnemy === darthVader.name){ 
+										currentEnemyHP = darthVader.health;
+										enemyCounterAtk = darthVader.counter;
+										connectEnemy = true;
+									}
+								}
+
+								yourHP = yourHP - enemyCounterAtk;
+								if(choice === finn.name){
+									finn.health = yourHP;
+									$(".finn").html(finn.health);	
+								}else if(choice === rey.name){
+									rey.health = yourHP;
+									$(".rey").html(rey.health);
+								}else if(choice === kyloRen.name){
+									kyloRen.health = yourHP;
+									$(".kyloren").html(kyloRen.health);
+								}else if(choice === darthVader.name){
+									darthVader.health = yourHP;
+									$(".darthvader").html(darthVader.health);
+								}
+
 								if(yourEnemy === finn.name){
-									var currentEnemyHP = 0; 
-									currentEnemyHP = finn.health;
-									var enemyCounterAtk = finn.counter;
 									currentEnemyHP = currentEnemyHP - atkDmg;
 									finn.health = currentEnemyHP;
-									$(".finn").html(finn.health);
+									$(".finn").html(finn.health);	
 								}else if(yourEnemy === rey.name){
-									var currentEnemyHP = 0; 
-									currentEnemyHP = rey.health;
-									var enemyCounterAtk = rey.counter;
 									currentEnemyHP = currentEnemyHP - atkDmg;
 									rey.health = currentEnemyHP;
 									$(".rey").html(rey.health);
 								}else if(yourEnemy === kyloRen.name){
-									var currentEnemyHP = 0; 
-									currentEnemyHP = kyloRen.health;
-									var enemyCounterAtk = kyloRen.counter;
 									currentEnemyHP = currentEnemyHP - atkDmg;
 									kyloRen.health = currentEnemyHP;
-									$(".kyloren").html(kyloRen.health);	
-								}else if(yourEnemy === darthVader.name){
-									var currentEnemyHP = 0; 
-									currentEnemyHP = darthVader.health;
-									var enemyCounterAtk = darthVader[a].counter;
+									$(".kyloren").html(kyloRen.health);								}else if(choice === darthVader.name){
+								}else if(yourEnemy === darthVader.name){	
 									currentEnemyHP = currentEnemyHP - atkDmg;
-									darkVader.health = currentEnemyHP;
+									darthVader.health = currentEnemyHP;
 									$(".darthvader").html(darthVader.health);
 								}
-									
-								for(var i = 0; i < characters.length; i++){
-									if(choice === characters[i].name){
-										var yourHP =  characters[i].health;
-										console.log(yourHP);
-										console.log(choice);
-										yourHP = yourHP - enemyCounterAtk;
-										characters[i].health = yourHP;
-										
-										var enemyText = $("<div>");
-										$(".text").append(enemyText);
-										enemyText.html("Your enemy " + yourEnemy + " attacks you back for " + enemyCounterAtk +" damage.");
-									
-										$(".finn").html(finn.health);
-										$(".rey").html(rey.health);
-										$(".kyloren").html(kyloRen.health);
-										$(".darthvader").html(darthVader.health);	
-
-									}
-								}
+								
+								var enemyText = $("<div>");
+								$(".text").append(enemyText);
+								enemyText.html("Your enemy " + yourEnemy + " attacks you back for " + enemyCounterAtk +" damage.");
 
 							}
 						});
