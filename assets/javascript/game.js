@@ -26,6 +26,7 @@ var princessBP = {
 var characters = [finn, jake, iceking, princessBP]; //holds characters object
 var playerChose = false;
 var enemyChosen = false;
+var enemiesDefeated = 0;
 var choice = ""; //global scope
 var yourEnemy = ""; //global scope
 
@@ -39,46 +40,46 @@ $(document).ready(function(){
 
 	gameStart();	
 	function gameStart(){
-	
+		playerChose = false;	
 		choosePlayer();
 		function choosePlayer(){
-			$(".character").on("click", function(){ 
-			
-				if(playerChose === false){
+			$(".character").on("click", function(){
+				if(playerChose === false){ 
 					choice = $(this).attr("value");
 					$(".text").html("You chose character: " + choice);
-	}	
-			//Runs through all characters and places in enemy section
-			//Then the chosen character is placed in player section
-			for(var i = 0; i < characters.length; i++){	
-				//*ERROR #1: looping is replacing value names, enemy name below always shows up as Princess BG
-				$(".character").attr("value", characters[i].name).appendTo(".enemy-section"); //.detach(), takes object and moves
+					$(this).removeClass("enemy");
+					$(this).addClass("player"); //to differentiate player attacked
+					$(".player").detach().appendTo(".player-section");
+				}
+				playerChose = true; //change boolean value to true so statement can't run again	
 				
-				console.log(characters[i].name);
+				if(playerChose === true){
+					repositionEnemies();
+					function repositionEnemies(){
+						$(".enemy").detach().appendTo(".enemy-section");
+					}
+				}
+			});
+		}//END choosePlayer();
+		chooseEnemy();
+		function chooseEnemy(){
+			$(".character").on("click", function(){
+				if(enemyChosen === false && $(this).hasClass("enemy")){
+					yourEnemy = $(this).attr("value");
+					$(".text").html("Your current enemy is " + yourEnemy);
+					$(this).detach().appendTo(".defender-section");
+					$(this).addClass("currentEnemy");
+					enemyChosen = true;
+				}
 
-				//Adding enemy class to differentiate between chara types
-				$(".character").attr("value", characters[i].name).addClass("enemy");
-				$(this).appendTo(".player-section");
-
-				//Need to remove enemy class from player character
-				$(this).removeClass("enemy");
-				$(this).addClass("player"); //to differentiate player attacked
-			}
-			playerChose = true; //change boolean value to true so statement can't run again
-			console.log(choice);
+			});
+		}//END chooseEnemy();
+		battle(){
+			
 		}
+	}//END gameStart();
+/*
 
-		//Player now chooses an enemy from leftover options
-		//Chosen enemy moved to Defender Section
-		if(enemyChosen === false && $(this).hasClass("enemy")){
-			yourEnemy = $(this).attr("value");
-			$(".text").html("Your enemy is currently " + yourEnemy);
-			$(this).appendTo(".defender-section");
-			$(this).addClass("currentEnemy"); //to differentiate opponent to attack
-			enemyChosen = true; //change boolean value to true so statement can't run again
-			console.log(yourEnemy); //*ERROR #1
-		}
-	});
 
 //CURRENTLY WORKING ON:
 	//Attack Button
@@ -108,7 +109,8 @@ $(document).ready(function(){
 			}
 		}
 	});
-}
+*/
+
 });
 
 
