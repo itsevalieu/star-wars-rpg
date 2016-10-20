@@ -26,6 +26,7 @@ var princessBP = {
 var characters = [finn, jake, iceking, princessBP]; //holds characters object
 var playerChose = false;
 var enemyChosen = false;
+var currentEnemyChosen = false;
 var enemiesDefeated = 0;
 var choice = ""; //global scope
 var yourEnemy = ""; //global scope
@@ -39,10 +40,42 @@ $(".bgp").html(characters[3].health);
 $(document).ready(function(){
 
 	gameStart();	
-	function gameStart(){
-		playerChose = false;	
-		choosePlayer();
-		function choosePlayer(){
+	function gameStart(){	
+	
+	var finn = {
+		name: "Finn",
+		health: 150,
+		attack: 6,
+		counter: 5,
+	};
+	var jake = {
+		name: "Jake", 
+		health: 125,
+		attack: 5,
+		counter: 4,
+	};
+	var iceking = {
+		name: "Ice King", 
+		health: 175,
+		attack: 7,
+		counter: 6,
+	};
+	var princessBG = {
+	 	name: "Princess BG",
+	 	health: 200, 
+	 	attack: 8,
+	 	counter: 7,
+	};
+	var characters = [finn, jake, iceking, princessBG]; //holds characters object
+	var playerChose = false;
+	var enemyChosen = false;
+	var currentEnemyChosen = false;
+	var enemiesDefeated = 0;
+	var choice = ""; //global scope
+	var yourEnemy = ""; //global scope
+		
+		choosePlayer_Enemy();
+		function choosePlayer_Enemy(){
 			$(".character").on("click", function(){
 				if(playerChose === false){ 
 					choice = $(this).attr("value");
@@ -59,46 +92,62 @@ $(document).ready(function(){
 						$(".enemy").detach().appendTo(".enemy-section");
 					}
 				}
-			});
-		}//END choosePlayer();
-		chooseEnemy();
-		function chooseEnemy(){
-			$(".character").on("click", function(){
 				if(enemyChosen === false && $(this).hasClass("enemy")){
 					yourEnemy = $(this).attr("value");
 					$(".text").html("Your current enemy is " + yourEnemy);
 					$(this).detach().appendTo(".defender-section");
 					$(this).addClass("currentEnemy");
 					enemyChosen = true;
+					currentEnemyChosen = true;
 				}
-
-			});
-		}//END chooseEnemy();
-		battle(){
 			
-		}
+				currentEnemyChosen = true;
+				battle();
+				function battle(){
+					if(currentEnemyChosen === true){
+						console.log(choice + yourEnemy);
+						$("button").on("click", function(){ 
+							attack(choice, yourEnemy);
+							function attack(choice, yourEnemy){
+								var choice = $(".player").attr("value");
+								var yourEnemy = $(".currentEnemy").attr("value");
+			
+								for(var i = 0; i < characters.length; i++){
+									if(choice === characters[i].name){
+										var yourBaseAtk = characters[i].attack;
+										var atkDmg = 0;
+										atkDmg = atkDmg + yourBaseAtk;
+										$(".text").html("You attacked " + yourEnemy + " for " + atkDmg +" damage.");
+									}
+								}
+
+								//WHY IS THIS NOT WORKING?!
+								for(var a=0; a<characters.length; a++){
+									if(yourEnemy === characters[a].name){
+										var currentEnemyHP = 0; 
+										currentEnemyHP = characters[a].health;
+										currentEnemyHP = currentEnemyHP - atkDmg;
+										var enemyText = $("<div>");
+										$(".text").append(enemyText);
+										enemyText.html(yourEnemy + " lost " + atkDmg + " health points. Current HP is " + currentEnemyHP);
+										characters[a].health = currentEnemyHP;
+										
+										$(".finn").html(characters[0].health);
+										$(".jake").html(characters[1].health);
+										$(".iceking").html(characters[2].health);
+										$(".bgp").html(characters[3].health);			
+									} 
+								}
+							}
+						});
+					}
+				}
+			});
+		}//END choosePlayer();
+		
+		
 	}//END gameStart();
 /*
-
-
-//CURRENTLY WORKING ON:
-	//Attack Button
-	$("button").on("click", function(){
-		var attack = true;
-		
-		for(var player = 0; player < characters.length; player++){
-			if(choice === characters[player].name){
-				var yourBaseAtk = characters[player].attack; //Change to Object
-				//scope issue^^ fix it.
-				console.log(yourBaseAtk);
-			}
-		}
-
-		var atkDmg = 0;
-		atkDmg = atkDmg + yourBaseAtk; //Error: check again.
-		
-		$(".text").html("You attacked " + yourEnemy + " for " + atkDmg +" damage.");
-
 		for(var cEnemy = 0; cEnemy < characters.length; cEnemy++){
 			if(yourEnemy === characters[cEnemy].name){
 				var cEnemyCounterAtk = characters[cEnemy].counter;
@@ -108,9 +157,8 @@ $(document).ready(function(){
 				console.log(cEnemyCounterAtk);	
 			}
 		}
-	});
+	
 */
-
 });
 
 
