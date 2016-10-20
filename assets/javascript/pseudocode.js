@@ -41,3 +41,38 @@ B]
 C]
 
 D]
+
+Okay, so I need to get started. Functions! What functions are needed in this game?
+
+function gameStart(){
+	choosePlayer();
+	chooseEnemy();
+
+	attack();
+	counter();
+
+}
+function choosePlayer(){
+	1. on click, player character is chosen
+	2. player character is moved to Your Player section
+	3. player chosen = true
+	4. display to Text section, name of chosen character
+}
+function repositionEnemies(){
+	1. if player is chosen = true, then move all other
+	characters to Enemy Section
+	2. add class "enemies" to these characters
+}
+function chooseEnemy(){
+	1. on click, "enemies", currenty enemy is chosen
+	2. current enemy is moved to Defender section
+	3. current Enemy is chosen = true
+	
+}
+function gameEnd(){}
+function gameReset(){}
+function attack(player, enemy){}
+function counter(enemy, player){}
+function repositionImage(){
+	image.hide();
+}

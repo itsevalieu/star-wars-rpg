@@ -1,49 +1,68 @@
-var characters = [
-	["Finn", 150, 6, 5],
- 	["Jake", 125, 5, 4],
- 	["Ice King", 175, 7, 6],
- 	["Princess BP", 200, 8, 7],
- ]; //[Name, HP, Base ATK, Counter ATK]
-
+//Variables
+var finn = {
+	name: "Finn",
+	health: 150,
+	attack: 6,
+	counter: 5,
+};
+var jake = {
+	name: "Jake", 
+	health: 125,
+	attack: 5,
+	counter: 4,
+};
+var iceking = {
+	name: "Ice King", 
+	health: 175,
+	attack: 7,
+	counter: 6,
+};
+var princessBP = {
+ 	name: "Princess BP",
+ 	health: 200, 
+ 	attack: 8,
+ 	counter: 7,
+};
+var characters = [finn, jake, iceking, princessBP]; //holds characters object
 var playerChose = false;
 var enemyChosen = false;
 var choice = ""; //global scope
 var yourEnemy = ""; //global scope
 
 //Initial Character Health Points
-$(".finn").html(characters[0][1]);
-$(".jake").html(characters[1][1]);
-$(".iceking").html(characters[2][1]);
-$(".bgp").html(characters[3][1]);
+$(".finn").html(characters[0].health);
+$(".jake").html(characters[1].health);
+$(".iceking").html(characters[2].health);
+$(".bgp").html(characters[3].health);
 
 $(document).ready(function(){
-	$(".character").on("click", function(){
-		var characters = [
-			["Finn", 150, 6, 5],
-		 	["Jake", 125, 5, 4],
-		 	["Ice King", 175, 7, 6],
-		 	["Princess BP", 200, 8, 7],
-		 ]; //[Name, HP, Base ATK, Counter ATK]
-		
-		//Player choses a character, can only do so once. 
-		if(playerChose === false){
-			choice = $(this).attr("value");
-			$(".text").html("You chose character: " + choice);
+
+	gameStart();	
+	function gameStart(){
+	
+		choosePlayer();
+		function choosePlayer(){
+			$(".character").on("click", function(){ 
 			
+				if(playerChose === false){
+					choice = $(this).attr("value");
+					$(".text").html("You chose character: " + choice);
+	}	
 			//Runs through all characters and places in enemy section
 			//Then the chosen character is placed in player section
 			for(var i = 0; i < characters.length; i++){	
-				//*ERROR #1: looping is replacing value names, enemy name below always shows up as Princess BP
-				$(".character").attr("value", characters[i][0]).appendTo(".enemy-section");
+				//*ERROR #1: looping is replacing value names, enemy name below always shows up as Princess BG
+				$(".character").attr("value", characters[i].name).appendTo(".enemy-section"); //.detach(), takes object and moves
 				
+				console.log(characters[i].name);
+
 				//Adding enemy class to differentiate between chara types
-				$(".character").attr("value", characters[i][0]).addClass("enemy");
+				$(".character").attr("value", characters[i].name).addClass("enemy");
 				$(this).appendTo(".player-section");
 
 				//Need to remove enemy class from player character
 				$(this).removeClass("enemy");
 				$(this).addClass("player"); //to differentiate player attacked
-				console.log($(this));
 			}
 			playerChose = true; //change boolean value to true so statement can't run again
 			console.log(choice);
@@ -67,27 +86,29 @@ $(document).ready(function(){
 		var attack = true;
 		
 		for(var player = 0; player < characters.length; player++){
-			if(choice === characters[player][0]){
-				var yourBaseAtk = characters[player][2];
+			if(choice === characters[player].name){
+				var yourBaseAtk = characters[player].attack; //Change to Object
+				//scope issue^^ fix it.
 				console.log(yourBaseAtk);
 			}
 		}
-		if(attack){
-			$(".text").html("You attacked " + yourEnemy + " for " + yourBaseAtk +" damage.");
-			for(var cEnemy = 0; cEnemy < characters.length; cEnemy++){
-				if(yourEnemy === characters[cEnemy][0]){
-					var cEnemyCounterAtk = characters[cEnemy][3];
-					console.log(cEnemyCounterAtk);
-				}
+
+		var atkDmg = 0;
+		atkDmg = atkDmg + yourBaseAtk; //Error: check again.
+		
+		$(".text").html("You attacked " + yourEnemy + " for " + atkDmg +" damage.");
+
+		for(var cEnemy = 0; cEnemy < characters.length; cEnemy++){
+			if(yourEnemy === characters[cEnemy].name){
+				var cEnemyCounterAtk = characters[cEnemy].counter;
+				var enemyText = $("<div>");
+				$(".text").append(enemyText);
+				enemyText.html("Your enemy " + yourEnemy + " attacks you back for " + cEnemyCounterAtk +" damage.");
+				console.log(cEnemyCounterAtk);	
 			}
 		}
-
-/*		$(".finn").html(characters[0][1]);
-		$(".jake").html(characters[1][1]);
-		$(".iceking").html(characters[2][1]);
-		$(".bgp").html(characters[3][1]);
-*/
 	});
+}
 });
 
 
@@ -104,9 +125,7 @@ $(document).ready(function(){
 
 
 /*
-* When the game starts, the player will choose a character 
-by clicking on the fighter's picture. 
-The player will fight as that character for the rest of the game.
+
 
 * The player must then defeat all of the remaining fighters. 
 Enemies should be moved to a different area of the screen.
