@@ -117,13 +117,13 @@ $(document).ready(function(){
 						var yourHP = 0;
 						var currentEnemyHP = 0;
 						var enemyCounterAtk = 0;
-						var connectPlayer = $("button").attr("value", false);
 						$("button").on("click", function(){ 
 							attack(choice, yourEnemy);
 							function attack(choice, yourEnemy){
 								var choice = $(".player").attr("value");
 								var yourEnemy = $(".currentEnemy").attr("value");
 								//finding player hp and atk
+								var connectPlayer = false;
 								var connectEnemy = false;
 								if(connectPlayer === false){
 								
@@ -187,7 +187,7 @@ $(document).ready(function(){
 									$(".darthvader").html(darthVader.health);
 								}
 
-								if(yourEnemy === finn.name){
+							/*	if(yourEnemy === finn.name){
 									currentEnemyHP = currentEnemyHP - atkDmg;
 									finn.health = currentEnemyHP;
 									$(".finn").html(finn.health);	
@@ -204,7 +204,7 @@ $(document).ready(function(){
 									darthVader.health = currentEnemyHP;
 									$(".darthvader").html(darthVader.health);
 								}
-								
+							*/	
 								var enemyText = $("<div>");
 								$(".text").append(enemyText);
 								enemyText.html("Your enemy " + yourEnemy + " attacks you back for " + enemyCounterAtk +" damage.");
