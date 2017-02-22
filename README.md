@@ -1,1 +1,3 @@
-# week-4-game
+# Week 4: Star Wars RPG
+Technologies:
+* HTML, CSS, JS, jQuery
