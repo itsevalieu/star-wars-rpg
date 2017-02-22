@@ -109,7 +109,7 @@ footer{
 		width: 80%;
 	}
 	.row{
-		border: 1px solid black;
+		border: none;
 		float: left;
 		width: 100%;
 	}
