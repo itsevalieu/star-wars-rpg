@@ -1,3 +1,3 @@
-# Week 4: Star Wars RPG
+# Star Wars RPG
 Technologies:
 * HTML, CSS, JS, jQuery
